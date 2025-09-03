@@ -66,7 +66,7 @@
   <div class="flex gap-2">
     <Button label="Wind" :params="windParams" :baseVolume="2" :volumeGain="0" tone="C4" :duration="2.0" />
     <Button label="String" :params="stringParams" :baseVolume="0" :volumeGain="0" tone="G3" :duration="2.0" :isImmediate="true" />
-    <Button label="Kick" :params="kickParams" :baseVolume="8" :volumeGain="0" tone="C3" :duration="0.5" :isImmediate="true" />
+    <Button label="Kick" :params="kickParams" :baseVolume="4" :volumeGain="0" tone="C3" :duration="0.5" :isImmediate="true" />
   </div>
 </template>
 

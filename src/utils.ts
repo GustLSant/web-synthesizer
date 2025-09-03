@@ -7,7 +7,7 @@ function createSynth(params: SynthParams): Tone.FMSynth {
 
 export async function playSound(_params: SynthParams, _tone: string, _volume: number, _duration: number): Promise<void> {
   await Tone.start();
-  _params.volume = _volume;
-  const wind = createSynth(_params);
-  wind.triggerAttackRelease(_tone, _duration);
+  const params = { ..._params, volume: _volume };
+  const synth = createSynth(params);
+  synth.triggerAttackRelease(_tone, _duration);
 }
