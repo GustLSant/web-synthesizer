@@ -80,8 +80,8 @@
         background-color: rgba(0,0,0, 0.5);
 
         &.active{
-            background-color: rgb(0, 255, 150);
-            box-shadow: 0px 0px 50px 10px rgba(50,255,200, 0.5);
+            background-color: rgb(0,200,255);
+            box-shadow: 0px 0px 50px 10px rgba(0,200,255, 0.5);
         }
     }
 </style>

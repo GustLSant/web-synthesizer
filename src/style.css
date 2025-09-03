@@ -20,3 +20,53 @@ p, h1, h2, h3, span, small{
   padding: 0px;
   margin: 0px;
 }
+
+.shiny-border{
+  @apply border border-b-0 border-r-0 border-t-2 border-l-2;
+  border-color: rgba(255,255,255, 0.075);
+  box-shadow: 4px 4px 4px rgba(0,0,0, 0.1);
+}
+
+
+
+/* input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;
+  outline: none;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  margin-top: -2px;
+  box-shadow: -407px 0 0 400px #f50;
+}
+
+
+input[type="range"]::-moz-range-thumb{
+  width: 10px;
+  height: 10px;
+  @apply bg-orange-600;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  margin-top: -6px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track{
+  @apply bg-orange-900;
+  height: 6px;
+  border-radius: 4px;
+} */
+
