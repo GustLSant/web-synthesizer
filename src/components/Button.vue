@@ -39,38 +39,49 @@
 
 
 <template>
-    <div class="flex flex-col" :key="key" @click="handleClick">
+    <div class="flex flex-col items-center gap-2" :key="key" @click="handleClick">
         <p>{{ props.label }}</p>
-        <div
-            class="bt relative z-10 w-20 h-20 bottom-[-14px] rounded-2xl bg-neutral-300 border border-b-0 border-l-0 border-t-2 border-r-2 border-white"
-            :class="(isActive) ? 'active' : ''"
-        >
-            <div class="active-light absolute top-2 right-2 w-2 h-2 rounded-full" :class="(isActive) ? 'active' : ''">
-            </div>
-        </div>
-        <div class="relative z-0 w-20 h-8 bg-neutral-600 rounded-b-2xl">
 
+        <div class="bt-container relative rounded-2xl" style="box-shadow: 6px 10px 4px rgba(0,0,0, 0.25)" :class="(isActive) ? 'active' : ''">
+            <div
+                class="bt relative z-10 w-[80px] h-[80px] rounded-2xl bg-neutral-300 border border-b-0 border-r-0 border-t-2 border-l-2 border-white"
+                :class="(isActive) ? 'active' : ''"
+            >
+                <div class="active-light absolute z-20 top-2 right-2 w-2 h-2 rounded-full" :class="(isActive) ? 'active' : ''"></div>
+            </div>
+
+            <div class="relative z-0 w-full h-8 bg-neutral-600 bg-gradient-to-t from-neutral-700 to-slate-500 rounded-b-2xl">
+            </div>
         </div>
     </div>
 </template>
 
 
 <style scoped>
-    .bt{
-        transition: bottom 0.075s;
-        bottom: -14px;
+    .bt-container{
+        transition: margin-top 0.075s;
+        margin-top: 0px;
 
         &.active{
-            bottom: -20px;
+            margin-top: 6px;
+        }
+    }
+
+    .bt{
+        transition: margin-bottom 0.075s;
+        margin-bottom: -20px;
+
+        &.active{
+            margin-bottom: -26px;
         }
     }
 
     .active-light{
-        background-color: #262626;
+        background-color: rgba(0,0,0, 0.5);
 
         &.active{
-            background-color: oklch(70.7% 0.165 254.624);
-            box-shadow: 0 0 20px #3b82f6, 0 0 40px #3b82f6, 0 0 60px #3b82f6; /* efeito glow */
+            background-color: rgb(0, 255, 150);
+            box-shadow: 0px 0px 50px 10px rgba(50,255,200, 0.5);
         }
     }
 </style>

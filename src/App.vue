@@ -63,10 +63,30 @@
 
 
 <template>
-  <div class="flex gap-2">
-    <Button label="Wind" :params="windParams" :baseVolume="2" :volumeGain="0" tone="C4" :duration="2.0" />
-    <Button label="String" :params="stringParams" :baseVolume="0" :volumeGain="0" tone="G3" :duration="2.0" :isImmediate="true" />
-    <Button label="Kick" :params="kickParams" :baseVolume="4" :volumeGain="0" tone="C3" :duration="0.5" :isImmediate="true" />
+  <div class="p-4">
+
+    <div
+      class="flex justify-between p-6 bg-[#17181c] rounded-md border border-b-0 border-r-0 border-t-2 border-l-2"
+      style="border-color: rgba(255,255,255, 0.075); box-shadow: 4px 4px 4px rgba(0,0,0, 0.1);"
+    >
+      <div class="flex flex-col gap-4 min-h-[190px]">
+        <h1 class="text-2xl font-medium">Parte 1 - Instrumentos Básicos</h1>
+        <div class="flex gap-4">
+          <Button label="Wind"   :params="windParams"   :baseVolume="2" :volumeGain="0" tone="C4" :duration="2.0" />
+          <Button label="String" :params="stringParams" :baseVolume="0" :volumeGain="0" tone="G3" :duration="2.0" :isImmediate="true" />
+          <Button label="Kick"   :params="kickParams"   :baseVolume="4" :volumeGain="0" tone="C3" :duration="0.5" :isImmediate="true" />
+        </div>
+      </div>
+
+      <div class="flex flex-col max-w-[400px] p-2 bg-neutral-600 rounded-md">
+        <h2 class="text-lg font-medium">Parâmetros</h2>
+        <div class="w-full h-4" style="background-image: linear-gradient(to top, cyan, rgb(0, 255, 150));">
+
+        </div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laborum nihil quae maxime ea iste cumque consectetur tempore?
+      </div>
+    </div>
+    
   </div>
 </template>
 
