@@ -2,7 +2,7 @@
     import { ref } from 'vue';
     import Button from './Button.vue';
     import type { SynthParams } from '../types';
-import PanelWrapper from './PanelWrapper.vue';
+    import PanelWrapper from './PanelWrapper.vue';
 
     const volumeGain = ref<number>(0.0);
 
