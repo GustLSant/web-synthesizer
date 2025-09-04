@@ -26,7 +26,7 @@
 
 
 <template>
-    <PanelWrapper min-width="500px">
+    <PanelWrapper min-width="650px">
         <section class="flex flex-col items-start gap-4">
             <h1 class="text-2xl font-medium">Parte 2 - Leitura de Arquivo</h1>
             <div class="flex gap-2 items-stretch">

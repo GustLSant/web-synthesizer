@@ -66,7 +66,7 @@
 
 
 <template>
-    <PanelWrapper minWidth="750px">
+    <PanelWrapper minWidth="650px">
         <section class="flex flex-col gap-4 min-h-[190px]">
             <h1 class="text-2xl font-medium">Parte 1 - Instrumentos Básicos</h1>
             <div class="flex gap-4">
