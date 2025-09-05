@@ -11,7 +11,7 @@
             <h1 class="text-2xl font-medium">Componentes do grupo:</h1>
             <div class="flex flex-col gap-2.5">
                 <p>Gustavo Lucas Santana - 201900076589</p>
-                <p>Lucas Bispo - ADICIONAR MATRICULA E NOME COMPLETO*</p>
+                <p>Lucas David Bispo Silva - 201900017256</p>
             </div>
         </div>
     </PanelWrapper>

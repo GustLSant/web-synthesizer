@@ -3,24 +3,128 @@
     import { ref } from 'vue';
     import { ArrowUpTrayIcon } from '@heroicons/vue/24/outline'
     import { PlayIcon } from '@heroicons/vue/24/solid'
+import type { SynthParams } from '../types';
+import { playSound } from '../utils';
+import { Tone } from 'tone/build/esm/core/Tone';
 
     const volumeGain = ref<number>(0.0);
     const selectedFile = ref<File | null>(null)
+    const instructions = ref<string[]>([])
+    
+    function getText(file: File){
+        const reader = new FileReader()
+        
+
+        reader.onload = () => {
+        if (typeof reader.result === 'string') {
+      
+            instructions.value = reader.result
+                .split(',')
+            }
+            console.log('testando:', instructions.value)
+        }
+
+        reader.readAsText(file)
+    }
+
+     const windParams: SynthParams = {
+        harmonicity: 1,
+        modulationIndex: 2,
+        oscillator: { type: "sine" },
+        modulation: { type: "sine" },
+        envelope: {
+            attack: 0.15,
+            decay: 0.001,
+            sustain: 0.8,
+            release: 1.0
+        },
+        modulationEnvelope: {
+            attack: 0.5,
+            decay: 0.3,
+            sustain: 1,
+            release: 1.0
+        }
+    };
+
+    const stringParams: SynthParams = {
+        harmonicity: 1.5,
+        modulationIndex: 8,
+        oscillator: { type: "triangle" },
+        modulation: { type: "square" },
+        envelope: {
+            attack: 0.01,
+            decay: 1.2,
+            sustain: 0.0,
+            release: 0.8
+        },
+        modulationEnvelope: {
+            attack: 0.01,
+            decay: 1.0,
+            sustain: 0.0,
+            release: 0.8
+        }
+    };
+
+    const kickParams: SynthParams = {
+        harmonicity: 0.5,
+        modulationIndex: 30,
+        oscillator: { type: "sine" },
+        modulation: { type: "sine" },
+        envelope: {
+            attack: 0.001,
+            decay: 0.8,
+            sustain: 0.9,
+            release: 1
+        },
+        modulationEnvelope: {
+            attack: 0.001,
+            decay: 0.05,
+            sustain: 0.0,
+            release: 0.01
+        },
+    }    
+
+    var selectedParams: SynthParams = kickParams;
+    function getParam(instruction: string) {
+        switch (instruction) {
+            case "Ic":
+            selectedParams = stringParams;
+            break
+            case "Is":
+            selectedParams =windParams;
+            break
+            case "Ic":
+            selectedParams = kickParams;
+            break
+            default:
+            console.log("Instruções inválidas. Tente novamente.")
+            }
+    }
+
 
     function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement
         if (input.files && input.files.length > 0) {
             selectedFile.value = input.files[0]
             console.log("Arquivo selecionado:", input.files[0].name)
+            getText(selectedFile.value);
         }
         else{
             window.alert("Erro ao carregar o arquivo!")
         }
     }
 
-    function handleClickPlay() {
+    const handleClickPlay = async() => {
         if(!selectedFile.value){ window.alert("Erro ao tocar o arquivo de áudio!"); return; }
-        console.log('PLAY no audio: ', selectedFile.value.name);
+        console.log(instructions.value[1]);
+        getParam(instructions.value[1]);
+        const tone = "C5";
+        const volume = 2;
+        const duration = 2;
+
+        playSound(selectedParams, tone, volume, duration);
+        
+        
     }
 </script>
 
