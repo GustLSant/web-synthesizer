@@ -35,7 +35,7 @@
         return Number(duration);
     }
 
-     const windParams: SynthParams = {
+    const windParams: SynthParams = {
         harmonicity: 1,
         modulationIndex: 2,
         oscillator: { type: "sine" },
@@ -96,17 +96,17 @@
     function getParams(instruction: string) {
         switch (instruction) {
             case "Ic":
-            selectedParams = stringParams;
-            break
+                selectedParams = stringParams;
+                break
             case "Is":
-            selectedParams =windParams;
-            break
+                selectedParams =windParams;
+                break
             case "Ip":
-            selectedParams = kickParams;
-            break
+                selectedParams = kickParams;
+                break
             default:
-            console.log("Instruções inválidas. Tente novamente.")
-            }
+                console.log("Instruções inválidas. Tente novamente.")
+        }
     }
 
     function playNote(instruction: string, params: SynthParams, baseVolume: number, baseDuration: number) {
@@ -126,7 +126,7 @@
 
         const noteVolume = intensidade === "F" ? baseVolume : baseVolume / 2;
 
-        playSound(params, noteTone, noteVolume, noteDuration);
+        playSound(params, noteTone, noteVolume + volumeGain.value, noteDuration);
 
         return noteDuration;
     }

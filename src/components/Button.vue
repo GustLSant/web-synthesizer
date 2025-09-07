@@ -1,7 +1,8 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { onMounted, onUnmounted, ref } from 'vue';
     import type { SynthParams } from '../types';
     import { playSound } from '../utils';
+    import { EventBus } from '../eventBus';
 
     interface ButtonProps {
         label: string,
@@ -9,8 +10,8 @@
         baseVolume: number,
         volumeGain: number,
         tone: string,
-        duration: number,
-        isImmediate?: boolean,
+        duration?: number,
+        buttonKey?: string,
     }
     const props = defineProps<ButtonProps>()
 
@@ -20,20 +21,37 @@
     const handleClick = async () => {
         if(!isActive.value){
             key.value += 1;
+            const duration = (props.duration) ? props.duration : 0.1;
 
             playSound(
                 props.params, 
                 props.tone, 
                 props.baseVolume+props.volumeGain, 
-                props.duration
+                duration
             )
 
             isActive.value = true;
             setTimeout(
                 ()=>{ isActive.value = false; },
-                ((props.isImmediate) ? 0.1 : props.duration) * 1000
+                duration*1000
             );
         }
+    }
+
+
+    onMounted(()=>{
+        console.log(props.buttonKey)
+        if(!props.buttonKey) return;
+        EventBus.addEventListener("key-pressed", handleKeyPressed)
+    })
+    onUnmounted(()=>{
+        if(!props.buttonKey) return;
+        EventBus.removeEventListener("key-pressed", handleKeyPressed)
+    })
+
+    function handleKeyPressed(e: Event) {
+        const { key } = (e as CustomEvent<{ key: string }>).detail;
+        if(key === props.buttonKey){ handleClick(); }
     }
 </script>
 
@@ -42,7 +60,7 @@
     <div class="flex flex-col items-center gap-2" :key="key" @click="handleClick">
         <p>{{ props.label }}</p>
 
-        <div class="bt-container relative rounded-2xl" style="box-shadow: 6px 10px 4px rgba(0,0,0, 0.25)" :class="(isActive) ? 'active' : ''">
+        <div class="bt-container relative rounded-2xl hover:cursor-pointer" style="box-shadow: 6px 10px 4px rgba(0,0,0, 0.25)" :class="(isActive) ? 'active' : ''">
             <div
                 class="bt relative z-10 w-[80px] h-[80px] rounded-2xl bg-neutral-300 border border-b-0 border-r-0 border-t-2 border-l-2 border-white"
                 :class="(isActive) ? 'active' : ''"
