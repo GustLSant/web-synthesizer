@@ -27,6 +27,16 @@ import { Tone } from 'tone/build/esm/core/Tone';
         reader.readAsText(file)
     }
 
+    function getBaseDuration (string: string, params: SynthParams){
+        let duration;
+        if (params == kickParams){
+            duration = 1;
+        } else {
+            duration = string.slice(1)
+        }
+        return Number(duration);
+    }
+
      const windParams: SynthParams = {
         harmonicity: 1,
         modulationIndex: 2,
@@ -68,13 +78,13 @@ import { Tone } from 'tone/build/esm/core/Tone';
     const kickParams: SynthParams = {
         harmonicity: 0.5,
         modulationIndex: 30,
-        oscillator: { type: "sine" },
+        oscillator: { type: "sawtooth" },
         modulation: { type: "sine" },
         envelope: {
             attack: 0.001,
-            decay: 0.8,
-            sustain: 0.9,
-            release: 1
+            decay: 0.02,
+            sustain: 0.0,
+            release: 0.05
         },
         modulationEnvelope: {
             attack: 0.001,
@@ -84,8 +94,8 @@ import { Tone } from 'tone/build/esm/core/Tone';
         },
     }    
 
-    var selectedParams: SynthParams = kickParams;
-    function getParam(instruction: string) {
+    let selectedParams: SynthParams = kickParams;
+    function getParams(instruction: string) {
         switch (instruction) {
             case "Ic":
             selectedParams = stringParams;
@@ -93,7 +103,7 @@ import { Tone } from 'tone/build/esm/core/Tone';
             case "Is":
             selectedParams =windParams;
             break
-            case "Ic":
+            case "Ip":
             selectedParams = kickParams;
             break
             default:
@@ -101,6 +111,27 @@ import { Tone } from 'tone/build/esm/core/Tone';
             }
     }
 
+    function playNote(instruction: string, params: SynthParams, baseVolume: number, baseDuration: number) {
+    const nota = instruction[0];        // A-G
+    const acidente = instruction[1];    // n, s, b
+    const oitava = instruction[2];      // 0-8
+    const divisor = instruction[3];     // k ou número
+    const intensidade = instruction[4]; // F ou f
+
+    let noteModifier = "";
+    if (acidente === "s") noteModifier = "#";
+    if (acidente === "b") noteModifier = "b";
+    const noteTone = nota + noteModifier + oitava;
+
+    let noteDuration = (divisor === "k") ? baseDuration / 1 : baseDuration / Number(divisor);
+    if (params === kickParams) noteDuration = 0.05;
+
+    const noteVolume = intensidade === "F" ? baseVolume : baseVolume / 2;
+
+    playSound(params, noteTone, noteVolume, noteDuration);
+
+    return noteDuration;
+}
 
     function handleFileChange(event: Event) {
         const input = event.target as HTMLInputElement
@@ -117,13 +148,25 @@ import { Tone } from 'tone/build/esm/core/Tone';
     const handleClickPlay = async() => {
         if(!selectedFile.value){ window.alert("Erro ao tocar o arquivo de áudio!"); return; }
         console.log(instructions.value[1]);
-        getParam(instructions.value[1]);
-        const tone = "C5";
-        const volume = 2;
-        const duration = 2;
+        getParams(instructions.value[1]);
+        let baseVolume = 6;
+        let baseDuration = getBaseDuration(instructions.value[0], selectedParams);
+        let notas = instructions.value.slice(2);
+        console.log(notas)
 
-        playSound(selectedParams, tone, volume, duration);
-        
+        for (const nota of notas) {
+            let waitTime: number;
+            
+            const noteDuration = await playNote(nota.toString(), selectedParams, baseVolume, baseDuration);
+
+            if(selectedParams == kickParams){
+                waitTime = 1000;
+            } else {
+                waitTime = noteDuration * 1000
+            }
+            await new Promise(res => setTimeout(res, waitTime));
+            
+        }
         
     }
 </script>
